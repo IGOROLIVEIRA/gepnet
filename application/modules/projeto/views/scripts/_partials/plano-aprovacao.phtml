@@ -1,0 +1,288 @@
+<?php
+
+$service = new Projeto_Service_Gerencia();
+
+if (!is_object($this->projetos)) {
+    $arProjeto = $this->projetos;
+    $this->projetos = $service->retornaProjetoPorId($this->projetos);
+}
+
+?>
+
+<style type="text/css">
+
+    table tr td {
+        border: 0.1mm solid #220044;
+        background-clip: border-box;
+    }
+
+    .baixo {
+        color: #04b400;
+        font-weight: bold;
+    }
+
+    .medio {
+        color: #F7CF07;
+        font-weight: bold;
+    }
+
+    .alto {
+        color: #CC0033;
+        font-weight: bold;
+    }
+</style>
+
+<div align="left" class="span4" style="margin-top: 60px">
+    <h5>3. PLANO DE RECURSOS HUMANOS</h5>
+</div>
+<div align="left" class="span4">
+    <h5>3.1 EQUIPE DO PROJETO</h5>
+</div>
+<div align="center" style="margin-top: 20px">
+    <table class="" style="width: 100%; border:0.1mm solid #220044;  background-clip: border-box;">
+        <colgroup>
+            <col style="width: 2px">
+            <col style="width: 35px">
+            <col style="width: 100px">
+            <col style="width: 100px">
+            <col style="width: 50px">
+        </colgroup>
+        <thead>
+        <tr class="" style="width: 100%; border:0.1mm solid #220044; background-clip: border-box;">
+            <td>NOME</td>
+            <td>FUN&Ccedil;&Atilde;O NO PROJETO</td>
+            <td>TELEFONE</td>
+            <td>E-MAIL</td>
+            <td>Observação</td>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        if (!empty($this->projetos->partes)) :
+            foreach ($this->projetos->partes->getIterator() as $parte):
+                if (empty($parte['idparteinteressada']) == false):
+                    ?>
+                    <tr>
+                        <td><?php echo strtoupper($parte['nomparteinteressada']); ?></td>
+                        <td><?php echo $parte['nomfuncao']; ?></td>
+                        <td><?php echo $parte['destelefone']; ?></td>
+                        <td><?php echo strtolower($parte['desemail']); ?></td>
+                        <td><?php echo $parte['observacao'] ?></td>
+                    </tr>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5">Nenhum registro encontrado.</td>
+                    </tr>
+                <?php
+                endif;
+            endforeach;
+        endif;
+        ?>
+        </tbody>
+    </table>
+</div>
+
+<div align="left" class="span4" style="margin-top: 60px">
+    <h5>4. PLANO DE COMUNICA&Ccedil;&Otilde;ES</h5>
+</div>
+<div align="left" class="span4">
+    <h5>4.1 MATRIZ DE COMUNICA&Ccedil;&Atilde;O </h5>
+</div>
+<div align="center" style="margin-top: 20px">
+    <table class="" style="width: 100%; border:0.1mm solid #220044; background-clip: border-box;">
+        <colgroup>
+            <col style="width: 2px">
+            <col style="width: 35px">
+            <col style="width: 100px">
+            <col style="width: 100px">
+            <col style="width: 50px">
+        </colgroup>
+        <thead>
+        <tr class="" style="width: 100%; border:0.1mm solid #220044; background-clip: border-box;">
+            <td>O QUE SER&Aacute; INFORMADO</td>
+            <td>QUEM SER&Aacute; INFORMADO</td>
+            <td>QUAL A ORIGEM</td>
+            <td>QUAL A FREQU&Ecirc;NCIA</td>
+            <td>COMO SER&Aacute; TRANSMITIDA</td>
+            <td>ONDE SER&Aacute; ARMAZENADA</td>
+            <td>QUEM SER&Aacute; O RESPONS&Aacute;VEL</td>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach ($this->comunica as $comunicacao):
+
+            if (empty($comunicacao['idcomunicacao']) == false): ?>
+                <tr>
+                    <td><?php echo $comunicacao['desinformacao']; ?></td>
+                    <td><?php echo $comunicacao['desinformado']; ?></td>
+                    <td><?php echo $comunicacao['desorigem']; ?></td>
+                    <td><?php echo $comunicacao['desfrequencia']; ?></td>
+                    <td><?php echo $comunicacao['destransmissao']; ?></td>
+                    <td><?php echo $comunicacao['desarmazenamento']; ?></td>
+                    <td><?php echo $comunicacao['nomresponsavel']; ?></td>
+                </tr>
+            <?php
+            endif;
+        endforeach;
+        if (empty($comunicacao['idcomunicacao']) == true):
+            ?>
+            <tr>
+                <td colspan="7">Nenhum registro encontrado.</td>
+            </tr>
+        <?php
+        endif;
+        ?>
+        </tbody>
+    </table>
+</div>
+
+<div align="left" class="span4" style="margin-top: 60px">
+    <h5>5. PLANO DE RISCOS</h5>
+</div>
+<div align="left" class="span4">
+    <h5>5.1 MATRIZ DE RISCOS </h5>
+</div>
+<div align="center" style="margin-top: 20px">
+    <table class="" style="width: 100%; border:0.1mm solid #220044; background-clip: border-box;">
+        <colgroup>
+            <col style="width: 2px">
+            <col style="width: 35px">
+            <col style="width: 100px">
+            <col style="width: 100px">
+            <col style="width: 50px">
+        </colgroup>
+        <thead>
+        <tr class="" style="width: 100%; border:0.1mm solid #220044; background-clip: border-box;">
+            <td>RISCO</td>
+            <td>DESCRIÇÃO DO RISCO</td>
+            <td>CONSEQUÊNCIA DO RISCO</td>
+            <td>PxI</td>
+            <td>TIPO CONTRAMEDIDA</td>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach ($this->risco as $riscos):
+            $risco = $riscos['domcorrisco'];
+            switch ($risco) {
+                case  1:
+                    $risco = "<div class='alto'>" . 'Alto' . "</div>";
+                    break;
+                case  2:
+                    $risco = "<div class='medio'>" . 'Médio' . "</div>";
+                    break;
+                case 3:
+                    $risco = "<div class='baixo'>" . 'Baixo' . "</div>";
+                    break;
+            };
+            if (empty($riscos['idrisco']) == false): ?>
+                <tr>
+                    <td><?php echo $riscos['norisco']; ?></td>
+                    <td><?php echo $riscos['desrisco']; ?></td>
+                    <td><?php echo $riscos['desconsequencia']; ?></td>
+                    <td><?php echo $risco; ?></td>
+                    <td><?php echo $riscos['notipocontramedida']; ?></td>
+                </tr>
+            <?php
+            endif;
+        endforeach;
+        if (empty($riscos['idrisco']) == true):
+            ?>
+            <tr>
+                <td colspan="5">Nenhum registro encontrado.</td>
+            </tr>
+        <?php
+        endif;
+        ?>
+        </tbody>
+    </table>
+</div>
+
+<div align="left" class="span6" style="page-break-before: always;margin-top: 60px;margin-bottom: 40px">
+    <h5>6 APROVA&Ccedil;&Atilde;O DO PATROCINADOR</h5>
+</div>
+<div align="center" style="margin-top: 20px">
+    <table class="span10">
+        <colgroup>
+            <col style="width: 150px">
+            <col style="width: 15px">
+            <col style="width: 15px">
+        </colgroup>
+        <tbody style="text-align: center">
+        <tr style="vertical-align: bottom">
+            <td><?php echo $this->projetos->nompatrocinador; ?></td>
+            <td>____________________________________________________________________</td>
+            <td>/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/</td>
+        </tr>
+        <tr style="vertical-align: top">
+            <td><b>Patrocinador</b></td>
+            <td><b>Assinatura</b></td>
+            <td><b>Data da Aprova&ccedil;&atilde;o</b></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div align="left" class="span6" style="margin-top: 60px;margin-bottom: 40px">
+    <h5>7 CI&Ecirc;NCIA DO GERENTE DE PROJETO</h5>
+</div>
+<div align="center" style="margin-top: 20px">
+    <table class="span10">
+        <colgroup>
+            <col style="width: 150px">
+            <col style="width: 15px">
+            <col style="width: 15px">
+        </colgroup>
+        <tbody style="text-align: center">
+        <tr style="vertical-align: bottom">
+            <td><?php echo $this->projetos->nomgerenteprojeto; ?></td>
+            <td>____________________________________________________________________</td>
+            <td>/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/</td>
+        </tr>
+        <tr style="vertical-align: top">
+            <td><b>Gerente de Projeto</b></td>
+            <td><b>Assinatura</b></td>
+            <td><b>Data da Aprova&ccedil;&atilde;o</b></td>
+        </tr>
+        </tbody>
+
+        <tbody style="text-align: center;">
+        <tr style="vertical-align: bottom">
+            <td><?php echo $this->projetos->nomgerenteadjunto; ?></td>
+            <td>____________________________________________________________________</td>
+            <td>/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/</td>
+        </tr>
+        <tr style="vertical-align: top">
+            <td><b>Gerente Adjunto</b></td>
+            <td><b>Assinatura</b></td>
+            <td><b>Data da Aprova&ccedil;&atilde;o</b></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<?php if (count($this->assinaturas) > 0): ?>
+    <div align="left" class="span10" style="margin-top: 60px;margin-bottom: 20px">
+        <h5>8 ASSINATURA ELETR&Ocirc;NICA</h5><span style="font-size: 10px;">(Para validar a assinatura eletr&ocirc;nica acesse o endere&ccedil;o: URL de v&aacute;lida&ccedil;&atilde;o.)</span>
+    </div>
+    <div align="center" style="margin-top: 20px">
+        <table border="1" class="span10" cellspacing="1" cellpadding="1">
+            <colgroup>
+                <col style="width: 150px">
+                <col style="width: 15px">
+                <col style="width: 150px">
+            </colgroup>
+            <tbody style="text-align: center">
+            <?php foreach ($this->assinaturas as $assinatura) : ?>
+                <tr style="vertical-align: bottom">
+                    <td><?php echo $assinatura['nomparteinteressada']; ?></td>
+                    <td><?php echo $assinatura['assinado']; ?></td>
+                    <td><?php echo $assinatura['hashdoc']; ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+<?php endif; ?>
+</div>

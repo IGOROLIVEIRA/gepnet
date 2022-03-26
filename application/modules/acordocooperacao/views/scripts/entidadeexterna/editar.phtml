@@ -1,0 +1,25 @@
+<?php
+$this->headLink()
+    ->appendStylesheet($this->baseUrl('/css/form.css'));
+
+$frmAttr = $this->form->getAttribs();
+?>
+<div class="content">
+    <form id="form-entidadeexterna-editar"
+          name="form-entidadeexterna-editar"
+          action=""
+          method="<?php echo $frmAttr['method']; ?>">
+        <div class="row">
+            <div class="span10">
+                <?php echo $this->form->nomentidadeexterna; ?>
+            </div>
+        </div>
+
+        <?php echo $this->form->identidadeexterna; ?>
+        <div class="row">
+            <div class="col-sm-offset-9 col-sm-span1" style="float: right;">
+                (<?php echo "<img src=\"" . $this->baseUrl('/img/required.gif') . "\" />"; ?>)Preenchimento obrigatório
+            </div>
+        </div>
+    </form>
+</div>

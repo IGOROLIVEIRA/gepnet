@@ -1,0 +1,43 @@
+<?php
+$frmAttr = $this->form->getAttribs();
+?>
+
+<form id="<?php echo $frmAttr['id']; ?>"
+      name="<?php echo $frmAttr['id']; ?>"
+      action="<?php echo $this->form->getAction(); ?>"
+      method="<?php echo $frmAttr['method']; ?>">
+    <div class="row">
+        <div class="span4">
+            <?php echo $this->form->idgrupo; ?>
+        </div>
+        <div class="span4">
+            <?php echo $this->form->nomatividadecronograma; ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span4">
+            <?php echo $this->form->idparteinteressada; ?>
+        </div>
+        <div class="span4">
+            <?php echo $this->form->idresponsavel; ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span4">
+            <?php echo $this->form->desobs; ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span4">
+            <?php echo $this->form->descriterioaceitacao; ?>
+            <?php echo $this->form->idprojeto; ?>
+            <?php echo $this->form->idatividadecronograma; ?>
+            <?php echo $this->form->domtipoatividade; ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-9 col-sm-span1" style="float: right;  padding-top: 10px;">
+            (<?php echo "<img src=\"" . $this->baseUrl('/img/required.gif') . "\" />"; ?>)Preenchimento obrigatório
+        </div>
+    </div>
+</form>

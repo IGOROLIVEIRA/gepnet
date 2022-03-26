@@ -1,0 +1,76 @@
+<?php
+$this->headLink()
+    ->appendStylesheet($this->baseUrl('/css/form.css'));
+
+$frmAttr = $this->form->getAttribs();
+?>
+
+<script>
+    /* trazer as combos de visualizar e tipo quando não estiverem
+     * salvar como valores default visualizar: verdadeiro e tipo:geral
+    */
+    $(document).ready(function () {
+        var valor = $('#visualizar option:selected').val();
+        if (valor == "") {
+            $('#visualizar option[value=1]').attr('selected', 'selected');
+        }
+
+        var valor = $('#tipo option:selected').val();
+        if (valor == "") {
+            $("#tipo option[value='G']").attr('selected', 'selected');
+        }
+    });
+</script>
+
+<div class="row">
+    <div class="portlet portlet-azul span4">
+        <h3>Recurso</h3>
+        <div class="content">
+            <?php echo $this->permissao['ds_recurso']; ?>
+        </div>
+    </div>
+    <div class="portlet portlet-cinza span2">
+        <h3>Nome da Permissão</h3>
+        <div class="content">
+            <?php echo $this->permissao['no_permissao']; ?>
+        </div>
+    </div>
+</div>
+<form id="<?php echo $frmAttr['id']; ?>"
+      name="<?php echo $frmAttr['id']; ?>"
+      action="<?php echo $this->form->getAction(); ?>"
+      method="<?php echo $frmAttr['method']; ?>">
+    <div class="row formulario">
+        <div class="span8">
+            <fieldset>
+                <legend>Dados da Permissão</legend>
+                <div class="row">
+                    <div class="span6">
+                        <?php echo $this->form->ds_permissao; ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span6">
+                        <?php echo $this->form->visualizar; ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span6">
+                        <?php echo $this->form->tipo; ?>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row formulario">
+        <div class="span8">
+            <?php echo $this->form->idpermissao; ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-9 col-sm-span1" style="float: right; padding-top: 10px;">
+            (<?php echo "<img src=\"" . $this->baseUrl('/img/required.gif') . "\" />"; ?>)Preenchimento obrigatório
+        </div>
+    </div>
+</form>
+

@@ -1,0 +1,154 @@
+<script type="text/javascript">
+    $(function () {
+        $.pnotify.defaults.history = false;
+
+        $(".pessoa-button").on('click', function (event) {
+            event.preventDefault();
+            $(this).closest('.container-pessoa').find('.control-group').removeClass('input-selecionado');
+            $(this).closest('.control-group').addClass('input-selecionado');
+            if ($("table#list-grid-pessoa").length <= 0) {
+                $.ajax({
+                    url: base_url + "/projeto/comunicacao/pesquisar-parte-interessada",
+                    type: "GET",
+                    dataType: "html",
+                    success: function (html) {
+                        $(".grid-append").append(html).slideDown('fast');
+                    }
+                });
+                $('.pessoa-button')
+                    .off('click')
+                    .on('click', function () {
+                        var $this = $(this);
+                        $(".grid-append").slideDown('fast', function () {
+                            $this.closest('.container-pessoa').find('.control-group').removeClass('input-selecionado');
+                            $this.closest('.control-group').addClass('input-selecionado');
+                        });
+                    });
+            }
+        });
+    });
+
+    function selectRow(row) {
+        $('.input-selecionado')
+            .find('input:hidden').val(row.idparteinteressada).trigger('blur')
+            .end()
+            .find('input:text').val(row.nomparteinteressada).trigger('blur');
+    }
+
+    function reset() {
+        $('#desplanejado').val('');
+        $('#desrealizado').val('');
+        $('#desconsequencia').val('');
+        $('#descausa').val('');
+        $('#descontramedida').val('');
+        $('#datprazocontramedida').val('');
+        $('#datprazocontramedidaatraso').val('');
+        $('#desresponsavel').val('');
+        $('#idresponsavel').val('');
+    }
+</script>
+<?php
+$frmAttr = $this->form->getAttribs();
+?>
+<div class="region-center">
+
+    <div class="portlet portlet-marron span11">
+        <!--<h3>R3g - Imprevistos e Contramedidas</h3>-->
+        <div class="content">
+            <form id="<?php echo $frmAttr['id']; ?>"
+                  name="<?php echo $frmAttr['id']; ?>"
+                  action="<?php echo $this->form->getAction(); ?>"
+                  method="<?php echo $frmAttr['method']; ?>">
+                <fieldset>
+                    <div class="row">
+                        <div class="span3">
+                            <?php echo $this->form->domtipo; ?>
+                        </div>
+                        <div class="span3">
+                            <?php echo $this->form->datdeteccao; ?>
+                        </div>
+                        <div class="span2">
+                            <?php echo $this->form->domcorprazoprojeto; ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span5">
+                            <?php echo $this->form->desplanejado; ?>
+                            <strong>Restam <span id="contDesPlanejado" style="color: red"></span> caracteres a serem
+                                digitados.</strong>
+                        </div>
+                        <div class="span5">
+                            <?php echo $this->form->desrealizado; ?>
+                            <strong>Restam <span id="contDesRealizado" style="color: red"></span> caracteres a serem
+                                digitados.</strong>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span5">
+                            <?php echo $this->form->desconsequencia; ?>
+                            <strong>Restam <span id="contDesConsequencia" style="color: red"></span> caracteres a serem
+                                digitados.</strong>
+                        </div>
+                        <div class="span5">
+                            <?php echo $this->form->descausa; ?>
+                            <strong>Restam <span id="contDesCausa" style="color: red"></span> caracteres a serem
+                                digitados.</strong>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Contramedida R3G</legend>
+                    <div class="row">
+                        <div class="span11">
+                            <?php echo $this->form->descontramedida; ?>
+                            <strong>Restam <span id="contDesContramedida" style="color: red"></span> caracteres a serem
+                                digitados.</strong>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span2">
+                            <?php echo $this->form->datprazocontramedida; ?>
+                        </div>
+                        <div class="span2">
+                            <?php echo $this->form->datprazocontramedidaatraso; ?>
+                        </div>
+                        <div class="row container-pessoa">
+                            <div class="span3">
+                                <div class="control-group">
+                                    <?php echo $this->form->desresponsavel->renderLabel(); ?>
+                                    <div class="input-prepend ">
+                                        <?php echo $this->form->pessoabutton; ?>
+                                        <?php echo $this->form->desresponsavel->renderViewHelper(); ?>
+                                        <?php echo $this->form->idresponsavel; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span3">
+                                <?php echo $this->form->domstatuscontramedida; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row grid-append" style="display: none;"></div>
+                    <div class="row">
+                        <div class="span3">
+                            <?php echo $this->form->flacontramedidaefetiva; ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span5">
+                            <input type="hidden" id="idprojeto" name="idprojeto"
+                                   value="<?php echo $this->idprojeto; ?>">
+                            <?php echo $this->form->submit; ?>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="row">
+                    <div class="col-sm-offset-9 col-sm-span1" style="float: right;">
+                        (<?php echo "<img src=\"" . $this->baseUrl('/img/required.gif') . "\" />"; ?>)Preenchimento
+                        obrigatório
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
